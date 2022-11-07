@@ -22,6 +22,13 @@ final class CellViewController: UIViewController {
                             "Groot", "IronMan", "SpiderMan", "Thanos"
     ]
     
+    private let heroInfo: [String] = ["Eat my hammer", "I'm just a kid from Brooklyn",
+                              "Dormammu, I've come to bargain", "I am Groot",
+                              "Give me a scotch. I'm starving",
+                              "Hey kiddo, let mom and dad talk for a minute, will ya?",
+                              "I don't even know who you are"
+    ]
+    
     private let colors: [CGColor] = [UIColor.systemRed.cgColor,
                              UIColor.systemBlue.cgColor,
                              UIColor.systemYellow.cgColor,
@@ -68,6 +75,10 @@ final class CellViewController: UIViewController {
         chooseHeroLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 110).isActive = true
         chooseHeroLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
+        let gesture = UITapGestureRecognizer(target: self,
+                                             action: #selector(handleTapGesture(_:)))
+        
+        
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "photoCell")
         view.addSubview(collectionView)
         collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -75,15 +86,25 @@ final class CellViewController: UIViewController {
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         collectionView.heightAnchor.constraint(equalToConstant: cellHeight).isActive = true
         collectionView.backgroundColor = .clear
-        
-        func createGradientLayer(bottomColor: Int) {
-            let gradientLayer = CAGradientLayer()
-            gradientLayer.frame = view.bounds
-            gradientLayer.colors = [UIColor.systemGray.cgColor, colors[bottomColor]]
-            view.layer.addSublayer(gradientLayer)
-        }
+        collectionView.addGestureRecognizer(gesture)
     }
-
+    
+    @objc func handleTapGesture(_ gesture: UITapGestureRecognizer) {
+        guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+            return
+        }
+        let item = indexPath.item
+        let heroInfo = HeroViewController(heroView: images[item], heroLabelName: heroNames[item],
+                                          heroInfo: heroInfo[item])
+        navigationController?.pushViewController(heroInfo, animated: true)
+    }
+    
+    func createGradientLayer(bottomColor: Int) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor.systemGray.cgColor, colors[bottomColor]]
+        view.layer.addSublayer(gradientLayer)
+    }
 
 }
 
