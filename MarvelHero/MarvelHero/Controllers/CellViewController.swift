@@ -55,6 +55,10 @@ final class CellViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let service = Service()
+        service.getSmthFromInternet()
+        
         createGradientLayer(bottomColor: 5)
         let logoName = "marvel"
         let marvelLogo = UIImage(named: logoName)

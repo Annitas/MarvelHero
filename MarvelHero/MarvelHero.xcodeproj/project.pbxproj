@@ -13,6 +13,8 @@
 		751D831929188660001D632A /* CellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751D831829188660001D632A /* CellViewController.swift */; };
 		751D831E29188660001D632A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 751D831D29188660001D632A /* Assets.xcassets */; };
 		751D832129188660001D632A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 751D831F29188660001D632A /* LaunchScreen.storyboard */; };
+		754560B229189E5F00078E36 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754560B129189E5F00078E36 /* Service.swift */; };
+		754560B429189EB500078E36 /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754560B329189EB500078E36 /* HeroModel.swift */; };
 		75DC9BE7291891D4009760E7 /* HeroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DC9BE6291891D4009760E7 /* HeroViewController.swift */; };
 		75F14B3729188C3400A9A666 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */; };
 		75F14B3929188D1800A9A666 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3829188D1800A9A666 /* CustomCell.swift */; };
@@ -27,6 +29,8 @@
 		751D831D29188660001D632A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		751D832029188660001D632A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		751D832229188660001D632A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		754560B129189E5F00078E36 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		754560B329189EB500078E36 /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
 		75DC9BE6291891D4009760E7 /* HeroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroViewController.swift; sourceTree = "<group>"; };
 		75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
 		75F14B3829188D1800A9A666 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 		751D831329188660001D632A /* MarvelHero */ = {
 			isa = PBXGroup;
 			children = (
+				754560AF2918950900078E36 /* Network */,
 				75F14B3A291890A100A9A666 /* Controllers */,
 				751D831429188660001D632A /* AppDelegate.swift */,
 				751D831629188660001D632A /* SceneDelegate.swift */,
@@ -86,6 +91,15 @@
 				75F14B3829188D1800A9A666 /* CustomCell.swift */,
 			);
 			path = MarvelHero;
+			sourceTree = "<group>";
+		};
+		754560AF2918950900078E36 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				754560B129189E5F00078E36 /* Service.swift */,
+				754560B329189EB500078E36 /* HeroModel.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		75F14B3A291890A100A9A666 /* Controllers */ = {
@@ -220,6 +234,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				75F14B3729188C3400A9A666 /* PagingCollectionViewLayout.swift in Sources */,
+				754560B429189EB500078E36 /* HeroModel.swift in Sources */,
+				754560B229189E5F00078E36 /* Service.swift in Sources */,
 				751D831929188660001D632A /* CellViewController.swift in Sources */,
 				75F14B3929188D1800A9A666 /* CustomCell.swift in Sources */,
 				751D831529188660001D632A /* AppDelegate.swift in Sources */,
