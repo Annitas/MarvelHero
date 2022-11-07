@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  MarvelHero
 //
-//  Created by Anita Stashevskaya on 07.11.2022.
+//  Created by Anita Stashevskaya on 19.10.2022.
 //
 
 import UIKit

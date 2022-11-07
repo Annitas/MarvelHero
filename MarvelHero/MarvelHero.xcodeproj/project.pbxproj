@@ -13,6 +13,8 @@
 		751D831929188660001D632A /* CellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751D831829188660001D632A /* CellViewController.swift */; };
 		751D831E29188660001D632A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 751D831D29188660001D632A /* Assets.xcassets */; };
 		751D832129188660001D632A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 751D831F29188660001D632A /* LaunchScreen.storyboard */; };
+		75F14B3729188C3400A9A666 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */; };
+		75F14B3929188D1800A9A666 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3829188D1800A9A666 /* CustomCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		751D831D29188660001D632A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		751D832029188660001D632A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		751D832229188660001D632A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
+		75F14B3829188D1800A9A666 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		B14D73691947D56CA2BA02B7 /* Pods_MarvelHero.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MarvelHero.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F70304DD859F8A0EC237D00B /* Pods-MarvelHero.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarvelHero.debug.xcconfig"; path = "Target Support Files/Pods-MarvelHero/Pods-MarvelHero.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +80,8 @@
 				751D831D29188660001D632A /* Assets.xcassets */,
 				751D831F29188660001D632A /* LaunchScreen.storyboard */,
 				751D832229188660001D632A /* Info.plist */,
+				75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */,
+				75F14B3829188D1800A9A666 /* CustomCell.swift */,
 			);
 			path = MarvelHero;
 			sourceTree = "<group>";
@@ -202,7 +208,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75F14B3729188C3400A9A666 /* PagingCollectionViewLayout.swift in Sources */,
 				751D831929188660001D632A /* CellViewController.swift in Sources */,
+				75F14B3929188D1800A9A666 /* CustomCell.swift in Sources */,
 				751D831529188660001D632A /* AppDelegate.swift in Sources */,
 				751D831729188660001D632A /* SceneDelegate.swift in Sources */,
 			);
