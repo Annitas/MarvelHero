@@ -5,7 +5,6 @@
 //  Created by Anita Stashevskaya on 30.10.2022.
 //
 
-import Foundation
 import Alamofire
 import CryptoKit
 
