@@ -13,7 +13,6 @@ final class CustomCell: UICollectionViewCell {
         heroView.clipsToBounds = true
         return heroView
     }()
-    
     private let heroLabel: UILabel = {
         let heroLabel = UILabel()
         heroLabel.textColor = .white
@@ -31,14 +30,13 @@ final class CustomCell: UICollectionViewCell {
         heroImageView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         heroImageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         heroImageView.layer.cornerRadius = 15
-        
         heroLabel.translatesAutoresizingMaskIntoConstraints = false
         heroLabel.bottomAnchor.constraint(equalTo: heroImageView.bottomAnchor, constant: -10).isActive = true
         heroLabel.leftAnchor.constraint(equalTo: heroImageView.leftAnchor, constant: 10).isActive = true
     }
 
     func setupLayout(image: String, label: String) {
-        if let image : UIImage = UIImage(named: image) {
+        if let image: UIImage = UIImage(named: image) {
             heroImageView.image = image
         }
         let myShadow = NSShadow()
