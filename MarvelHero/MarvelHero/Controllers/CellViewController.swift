@@ -53,7 +53,11 @@ final class CellViewController: UIViewController {
         super.viewDidLoad()
         Service.sharedInstance.getSmthFromInternet { apiData in
             self.apiResult = apiData
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
+        print(apiResult)
         createGradientLayer(bottomColor: 5)
         let logoName = "marvel"
         let marvelLogo = UIImage(named: logoName)
@@ -100,7 +104,7 @@ final class CellViewController: UIViewController {
     }
 }
 
-extension CellViewController: UICollectionViewDataSource {
+extension CellViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
@@ -109,7 +113,7 @@ extension CellViewController: UICollectionViewDataSource {
             return .init()
         }
         print(apiResult.count)
-        // let heroLabel = apiResult[indexPath.item].name ?? ""
+//         let heroLabel = apiResult[indexPath.row].name ?? ""
         let heroImage = images[indexPath.item]
         let heroLabel = heroNames[indexPath.item] // item.name
         cell.setupLayout(image: heroImage, label: heroLabel)
