@@ -48,9 +48,12 @@ final class CellViewController: UIViewController {
         collectionView.dataSource = self
         return collectionView
     }()
+    var apiResult = [Character]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        Service.sharedInstance.getSmthFromInternet()
+        Service.sharedInstance.getSmthFromInternet { apiData in
+            self.apiResult = apiData
+        }
         createGradientLayer(bottomColor: 5)
         let logoName = "marvel"
         let marvelLogo = UIImage(named: logoName)
@@ -105,6 +108,8 @@ extension CellViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? CustomCell else {
             return .init()
         }
+        print(apiResult.count)
+        // let heroLabel = apiResult[indexPath.item].name ?? ""
         let heroImage = images[indexPath.item]
         let heroLabel = heroNames[indexPath.item] // item.name
         cell.setupLayout(image: heroImage, label: heroLabel)

@@ -16,8 +16,9 @@ final class Service {
     func endpoint(path: String) -> String {
         return baseUrl + path
     }
+    var heroArray = [Character]()
     // MARK: get some data from marvel api
-    func getSmthFromInternet() { // handler: @escaping (_ apiData: CharacterDataWrapper) -> Void
+    func getSmthFromInternet(handler: @escaping(_ apiData: [Character]) -> Void) { // handler: @escaping (_ apiData: CharacterDataWrapper) -> Void
         let ts = String(Date().timeIntervalSince1970)
         let hash = MD5(data: "\(ts)\(privateKey)\(publicKey)")
         let url = "https://gateway.marvel.com/v1/public/characters?orderBy=name&ts=\(ts)&apikey=\(publicKey)&hash=\(hash)"
@@ -30,7 +31,14 @@ final class Service {
             case .success(let data):
                 do {
                     let jsondata = try JSONDecoder().decode(CharacterDataWrapper.self, from: data!)
-                    print(jsondata.data?.results ?? "OoooOOooOOOps")
+                    let heroData = jsondata.data?.results
+                    let countHeroes = heroData?.count ?? 0
+                    for index in 0 ..< countHeroes {
+                        self.heroArray.append(heroData![index])
+                        print(self.heroArray[index].name ?? "", " DESCRIPTION ", self.heroArray[index].description ?? "")
+                    }
+                    print(self.heroArray.count)
+                    handler(self.heroArray)
                 } catch {
                 }
             case .failure(let error):
