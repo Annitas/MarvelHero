@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class HeroViewController: UIViewController {
+//    var photo: Thumbnail {
+//        didSet {
+//
+//        }
+//    }
     private var heroInfoView: UIImageView = { // picture of a hero
         var heroView = UIImageView()
         heroView.clipsToBounds = true
@@ -28,8 +34,9 @@ final class HeroViewController: UIViewController {
     convenience init(heroView: String, heroLabelName: String, heroInfo: String) {
         self.init()
         let marvelImageName = UIImage(named: heroView)
-        let marvelImage = UIImageView(image: marvelImageName)
-        self.heroInfoView = marvelImage
+//        let marvelImage = UIImageView(image: marvelImageName)
+//        self.heroInfoView = marvelImage //HERO IMAGE HERE
+        self.heroInfoView.setImage(imageUrl: heroView)
         self.heroLabelName.text = heroLabelName
         self.heroInfo.text = heroInfo
     }

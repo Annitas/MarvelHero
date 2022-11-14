@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CustomCell: UICollectionViewCell {
     private let heroImageView: UIImageView = {
@@ -36,9 +37,13 @@ final class CustomCell: UICollectionViewCell {
     }
 
     func setupLayout(image: String, label: String) {
-        if let image: UIImage = UIImage(named: image) {
-            heroImageView.image = image
-        }
+//        if let image: UIImage = UIImage(named: image) {
+//            heroImageView.image = image
+//        }
+        print("IN LAYOUT: \(image)")
+        let url = URL(string: image)
+        heroImageView.kf.setImage(with: url)
+//        self.heroImageView.setImage(imageUrl: image)
         let myShadow = NSShadow()
         myShadow.shadowBlurRadius = 5
         myShadow.shadowOffset = CGSize(width: 3, height: 2)
@@ -52,4 +57,10 @@ final class CustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension UIImageView {
+    func setImage(imageUrl: String) {
+        self.kf.setImage(with: URL(string: imageUrl))
+    }
 }

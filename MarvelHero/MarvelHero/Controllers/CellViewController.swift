@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CellViewController: UIViewController {
     // MARK: cell sizes
@@ -93,7 +94,7 @@ final class CellViewController: UIViewController {
         }
         let item = indexPath.item
         let heroInfo = HeroViewController(heroView: images[item], heroLabelName: heroNames[item],
-                                          heroInfo: heroInfo[item])
+                                          heroInfo: heroInfo[item])// out of index
         navigationController?.pushViewController(heroInfo, animated: true)
     }
     func createGradientLayer(bottomColor: Int) {
@@ -115,11 +116,12 @@ extension CellViewController: UICollectionViewDataSource {
         print("In Cell View: ", apiResult.count)
 //        let heroImage = images[indexPath.item]
         // let heroLabel = heroNames[indexPath.item] // item.name
-        var heroStr = apiResult[indexPath.row].thumbnail?.path ?? ""
-        heroStr += apiResult[indexPath.row].thumbnail?.ext! ?? ""
+        var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "").\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
+        heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
+        print("all \(heroStr)")
         let heroLabel = apiResult[indexPath.row].name ?? heroNames[indexPath.item]
-        let heroImage = heroStr // ?? images[indexPath.item]
+        let heroImage = "\(heroStr)" // ?? images[indexPath.item]
         cell.setupLayout(image: heroImage, label: heroLabel)
         return cell
-    }
+    }// self.heroInfoView = marvelImage
 }
