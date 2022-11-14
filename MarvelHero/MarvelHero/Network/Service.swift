@@ -35,7 +35,6 @@ final class Service {
                     let countHeroes = heroData?.count ?? 0
                     for index in 0 ..< countHeroes {
                         self.heroArray.append(heroData![index])
-//                        print(self.heroArray[index].name ?? "", " DESCRIPTION ", self.heroArray[index].description ?? "")
                     }
                     print("In Service: ", self.heroArray.count)
                     handler(self.heroArray)

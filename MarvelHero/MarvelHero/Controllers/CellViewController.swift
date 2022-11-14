@@ -104,18 +104,21 @@ final class CellViewController: UIViewController {
     }
 }
 
-extension CellViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CellViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return apiResult.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? CustomCell else {
             return .init()
         }
-        print(apiResult.count)
-//         let heroLabel = apiResult[indexPath.row].name ?? ""
-        let heroImage = images[indexPath.item]
-        let heroLabel = heroNames[indexPath.item] // item.name
+        print("In Cell View: ", apiResult.count)
+//        let heroImage = images[indexPath.item]
+        // let heroLabel = heroNames[indexPath.item] // item.name
+        var heroStr = apiResult[indexPath.row].thumbnail?.path ?? ""
+        heroStr += apiResult[indexPath.row].thumbnail?.ext! ?? ""
+        let heroLabel = apiResult[indexPath.row].name ?? heroNames[indexPath.item]
+        let heroImage = heroStr // ?? images[indexPath.item]
         cell.setupLayout(image: heroImage, label: heroLabel)
         return cell
     }
