@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class CellViewController: UIViewController {
     // MARK: cell sizes
@@ -52,13 +51,12 @@ final class CellViewController: UIViewController {
     var apiResult = [Character]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        Service.sharedInstance.getSmthFromInternet { apiData in
+        Service.sharedInstance.getMarvelHeroes { apiData in
             self.apiResult = apiData
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        print(apiResult)
         createGradientLayer(bottomColor: 5)
         let logoName = "marvel"
         let marvelLogo = UIImage(named: logoName)
@@ -92,9 +90,11 @@ final class CellViewController: UIViewController {
         guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
             return
         }
-        let item = indexPath.item
-        let heroInfo = HeroViewController(heroView: images[item], heroLabelName: heroNames[item],
-                                          heroInfo: heroInfo[item])// out of index
+        let heroLabel = apiResult[indexPath.row].name ?? ""
+        let heroInf = apiResult[indexPath.row].description ?? ""
+        var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "").\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
+        heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
+        let heroInfo = HeroViewController(heroView: heroStr, heroLabelName: heroLabel, heroInfo: heroInf)
         navigationController?.pushViewController(heroInfo, animated: true)
     }
     func createGradientLayer(bottomColor: Int) {
@@ -113,15 +113,10 @@ extension CellViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? CustomCell else {
             return .init()
         }
-        print("In Cell View: ", apiResult.count)
-//        let heroImage = images[indexPath.item]
-        // let heroLabel = heroNames[indexPath.item] // item.name
         var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "").\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
         heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
-        print("all \(heroStr)")
         let heroLabel = apiResult[indexPath.row].name ?? heroNames[indexPath.item]
-        let heroImage = "\(heroStr)" // ?? images[indexPath.item]
-        cell.setupLayout(image: heroImage, label: heroLabel)
+        cell.setupLayout(image: heroStr, label: heroLabel)
         return cell
-    }// self.heroInfoView = marvelImage
+    }
 }
