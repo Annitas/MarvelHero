@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 final class CustomCell: UICollectionViewCell {
     private let heroImageView: UIImageView = {
@@ -25,15 +26,17 @@ final class CustomCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubview(heroImageView)
         addSubview(heroLabel)
-        heroImageView.translatesAutoresizingMaskIntoConstraints = false
-        heroImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        heroImageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        heroImageView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        heroImageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        setupConstraints()
+    }
+    func setupConstraints() {
+        heroImageView.snp.makeConstraints { (make) in
+            make.leading.top.trailing.bottom.equalToSuperview()
+        }
         heroImageView.layer.cornerRadius = 15
-        heroLabel.translatesAutoresizingMaskIntoConstraints = false
-        heroLabel.bottomAnchor.constraint(equalTo: heroImageView.bottomAnchor, constant: -10).isActive = true
-        heroLabel.leftAnchor.constraint(equalTo: heroImageView.leftAnchor, constant: 10).isActive = true
+        heroLabel.snp.makeConstraints { (make) in
+            make.bottom.equalTo(heroImageView.snp.bottom).offset(-10)
+            make.left.equalTo(heroImageView.snp.left).offset(10)
+        }
     }
 
     func setupLayout(image: String, label: String) {

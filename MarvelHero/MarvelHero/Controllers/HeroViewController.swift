@@ -6,23 +6,25 @@
 //
 
 import UIKit
+import SnapKit
 
 final class HeroViewController: UIViewController {
-    private var heroImageView: UIImageView = {
+    private lazy var heroImageView: UIImageView = {
         var heroView = UIImageView()
         heroView.clipsToBounds = true
+        heroView.contentMode = .scaleAspectFill
         return heroView
     }()
     private let heroLabelName: UILabel = {
         var heroLabel = UILabel()
         heroLabel.textColor = .white
-        heroLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        heroLabel.font = .boldSystemFont(ofSize: 28)
         return heroLabel
     }()
     private let heroInfo: UILabel = {
         var heroInfoView = UILabel()
         heroInfoView.textColor = .white
-        heroInfoView.font = UIFont.boldSystemFont(ofSize: 22)
+        heroInfoView.font = .boldSystemFont(ofSize: 22)
         return heroInfoView
     }()
     convenience init(heroView: String, heroLabelName: String, heroInfo: String) {
@@ -35,24 +37,22 @@ final class HeroViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray3
-
         view.addSubview(heroImageView)
-        heroImageView.translatesAutoresizingMaskIntoConstraints = false
-        heroImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        heroImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        heroImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        heroImageView.layer.cornerRadius = 15
-
-        view.addSubview(heroInfo)
-        heroInfo.translatesAutoresizingMaskIntoConstraints = false
-        heroInfo.leftAnchor.constraint(equalTo: heroImageView.leftAnchor, constant: 20).isActive = true
-        heroInfo.bottomAnchor.constraint(equalTo: heroImageView.bottomAnchor, constant: -10).isActive = true
-
-        heroLabelName.font = .boldSystemFont(ofSize: 28)
         view.addSubview(heroLabelName)
-        heroLabelName.translatesAutoresizingMaskIntoConstraints = false
-        heroLabelName.bottomAnchor.constraint(equalTo: heroImageView.bottomAnchor, constant: -40).isActive = true
-        heroLabelName.leftAnchor.constraint(equalTo: heroImageView.leftAnchor, constant: 20).isActive = true
+        view.addSubview(heroInfo)
+        setupConstraints()
+    }
+    func setupConstraints() {
+        heroImageView.snp.makeConstraints { (make) -> Void in
+            make.edges.equalToSuperview()
+        }
+        heroLabelName.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview().offset(-60)
+            make.left.equalTo(20)
+        }
+        heroInfo.snp.makeConstraints { (make) in
+            make.top.equalTo(heroLabelName.snp.bottom).offset(2)
+            make.left.equalTo(20)
+        }
     }
 }
