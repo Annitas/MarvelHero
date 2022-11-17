@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
 
 final class CellViewController: UIViewController {
     // MARK: cell sizes
