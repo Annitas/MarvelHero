@@ -6,6 +6,7 @@ target 'MarvelHero' do
   use_frameworks!
   pod 'Alamofire', '~> 5.0'
   pod 'SwiftLint'
+  pod 'Kingfisher', '~> 7.0'
   # Pods for MarvelHero
 
 end

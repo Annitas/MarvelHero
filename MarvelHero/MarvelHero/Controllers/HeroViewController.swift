@@ -6,33 +6,37 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class HeroViewController: UIViewController {
-    private var heroInfoView: UIImageView = { //picture of a hero
+//    var photo: Thumbnail {
+//        didSet {
+//
+//        }
+//    }
+    private var heroInfoView: UIImageView = { // picture of a hero
         var heroView = UIImageView()
         heroView.clipsToBounds = true
         return heroView
     }()
-    
-    private let heroLabelName: UILabel = { //hero's name
+    private let heroLabelName: UILabel = { // hero's name
         var heroLabel = UILabel()
         heroLabel.textColor = .white
         heroLabel.font = UIFont.boldSystemFont(ofSize: 22)
         return heroLabel
     }()
-    
-    private let heroInfo: UILabel = { //description of a hero
+    private let heroInfo: UILabel = { // description of a hero
         var heroInfoView = UILabel()
         heroInfoView.textColor = .white
         heroInfoView.font = UIFont.boldSystemFont(ofSize: 22)
         return heroInfoView
     }()
-    
     convenience init(heroView: String, heroLabelName: String, heroInfo: String) {
         self.init()
         let marvelImageName = UIImage(named: heroView)
-        let marvelImage = UIImageView(image: marvelImageName)
-        self.heroInfoView = marvelImage
+//        let marvelImage = UIImageView(image: marvelImageName)
+//        self.heroInfoView = marvelImage //HERO IMAGE HERE
+        self.heroInfoView.setImage(imageUrl: heroView)
         self.heroLabelName.text = heroLabelName
         self.heroInfo.text = heroInfo
     }
@@ -61,15 +65,3 @@ final class HeroViewController: UIViewController {
 
     }
 }
-//
-//enum Some {
-//
-//    static let som1 = 1
-//    static var som2: Int { Bool.random() ? 1 : 0 }
-//    static let som3 = { Bool.random() ? 1 : 0 }()
-//}
-//
-//pint(som2)
-//print(som2)
-//print(som3)
-//print(som3)
