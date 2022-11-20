@@ -18,7 +18,7 @@ final class Service {
     }
     var heroArray = [Character]()
     // MARK: get some data from marvel api
-    func getSmthFromInternet(handler: @escaping(_ apiData: [Character]) -> Void) {
+    func getMarvelHeroes(handler: @escaping(_ apiData: [Character]) -> Void) {
         let ts = String(Date().timeIntervalSince1970)
         let hash = MD5(data: "\(ts)\(privateKey)\(publicKey)")
         let url = "https://gateway.marvel.com/v1/public/characters?orderBy=name&ts=\(ts)&apikey=\(publicKey)&hash=\(hash)"
@@ -36,7 +36,6 @@ final class Service {
                     for index in 0 ..< countHeroes {
                         self.heroArray.append(heroData![index])
                     }
-                    print("In Service: ", self.heroArray.count)
                     handler(self.heroArray)
                 } catch {
                 }

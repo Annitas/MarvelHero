@@ -6,26 +6,15 @@
 //
 
 import UIKit
-import Kingfisher
+import SnapKit
+import RealmSwift
 
 final class CellViewController: UIViewController {
     // MARK: cell sizes
     private let cellWidth = (3 / 4) * UIScreen.main.bounds.width
     private let cellHeight = (3 / 5) * UIScreen.main.bounds.height - 60
-    private let sectionSpacing = (1 / 8) * UIScreen.main.bounds.width
+    private let sectionSpacing = (1 / 8) * UIScreen.main.bounds.width // need
     private let cellSpacing = (1 / 16) * UIScreen.main.bounds.width
-    private let images: [String] = ["thor", "captainAmerica", "doctorStrange",
-                            "groot", "ironMan", "spiderMan", "thanos"
-    ]
-    private let heroNames: [String] = ["Thor", "Captain America", "Dr Strange",
-                            "Groot", "IronMan", "SpiderMan", "Thanos"
-    ]
-    private let heroInfo: [String] = ["Eat my hammer", "I'm just a kid from Brooklyn",
-                              "Dormammu, I've come to bargain", "I am Groot",
-                              "Give me a scotch. I'm starving",
-                              "Hey kiddo, let mom and dad talk for a minute, will ya?",
-                              "I don't even know who you are"
-    ]
     private let colors: [CGColor] = [UIColor.systemRed.cgColor,
                              UIColor.systemBlue.cgColor,
                              UIColor.systemYellow.cgColor,
@@ -42,59 +31,49 @@ final class CellViewController: UIViewController {
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         layout.minimumLineSpacing = cellSpacing
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .white
         collectionView.decelerationRate = .fast
         collectionView.dataSource = self
         return collectionView
     }()
+
+    private let imageView = UIImageView(image: UIImage(named: "marvel"))
+    private let chooseHeroLabel = UILabel()
     var apiResult = [Character]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        Service.sharedInstance.getSmthFromInternet { apiData in
+        Service.sharedInstance.getMarvelHeroes { apiData in
             self.apiResult = apiData
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        print(apiResult)
         createGradientLayer(bottomColor: 5)
-        let logoName = "marvel"
-        let marvelLogo = UIImage(named: logoName)
-        let imageView = UIImageView(image: marvelLogo!)
         view.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        let chooseHeroLabel = UILabel()
         view.addSubview(chooseHeroLabel)
         chooseHeroLabel.font = UIFont.boldSystemFont(ofSize: 26)
         chooseHeroLabel.text = "Choose your hero"
         chooseHeroLabel.textColor = UIColor.white
-        chooseHeroLabel.translatesAutoresizingMaskIntoConstraints = false
-        chooseHeroLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 110).isActive = true
-        chooseHeroLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         let gesture = UITapGestureRecognizer(target: self,
                                              action: #selector(handleTapGesture(_:)))
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "photoCell")
         view.addSubview(collectionView)
-        collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: cellHeight).isActive = true
+        // MARK: set constraints
+        setupConstraints()
         collectionView.backgroundColor = .clear
         collectionView.addGestureRecognizer(gesture)
+        collectionView.contentMode = .scaleAspectFill
+        collectionView.clipsToBounds = true
     }
     @objc func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
             return
         }
-        let item = indexPath.item
-        let heroInfo = HeroViewController(heroView: images[item], heroLabelName: heroNames[item],
-                                          heroInfo: heroInfo[item])// out of index
+        let heroLabel = apiResult[indexPath.row].name ?? ""
+        let heroInf = apiResult[indexPath.row].description ?? ""
+        var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "").\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
+        heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
+        let heroInfo = HeroViewController(heroView: heroStr, heroLabelName: heroLabel, heroInfo: heroInf)
         navigationController?.pushViewController(heroInfo, animated: true)
     }
     func createGradientLayer(bottomColor: Int) {
@@ -102,6 +81,24 @@ final class CellViewController: UIViewController {
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [UIColor.systemGray.cgColor, colors[bottomColor]]
         view.layer.addSublayer(gradientLayer)
+    }
+    func setupConstraints() {
+        imageView.snp.makeConstraints { (make) in
+            make.width.equalTo(150)
+            make.height.equalTo(44)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        chooseHeroLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+        }
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(chooseHeroLabel.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.80).offset(-70)
+        }
     }
 }
 
@@ -113,15 +110,10 @@ extension CellViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? CustomCell else {
             return .init()
         }
-        print("In Cell View: ", apiResult.count)
-//        let heroImage = images[indexPath.item]
-        // let heroLabel = heroNames[indexPath.item] // item.name
-        var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "").\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
+        var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "")/portrait_uncanny.\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
         heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
-        print("all \(heroStr)")
-        let heroLabel = apiResult[indexPath.row].name ?? heroNames[indexPath.item]
-        let heroImage = "\(heroStr)" // ?? images[indexPath.item]
-        cell.setupLayout(image: heroImage, label: heroLabel)
+        let heroLabel = apiResult[indexPath.row].name ?? ""
+        cell.setupLayout(image: heroStr, label: heroLabel)
         return cell
-    }// self.heroInfoView = marvelImage
+    }
 }

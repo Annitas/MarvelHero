@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 final class CustomCell: UICollectionViewCell {
     private let heroImageView: UIImageView = {
@@ -25,30 +26,26 @@ final class CustomCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubview(heroImageView)
         addSubview(heroLabel)
-        heroImageView.translatesAutoresizingMaskIntoConstraints = false
-        heroImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        heroImageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        heroImageView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        heroImageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        setupConstraints()
+    }
+    func setupConstraints() {
+        heroImageView.snp.makeConstraints { (make) in
+            make.leading.top.trailing.bottom.equalToSuperview()
+        }
         heroImageView.layer.cornerRadius = 15
-        heroLabel.translatesAutoresizingMaskIntoConstraints = false
-        heroLabel.bottomAnchor.constraint(equalTo: heroImageView.bottomAnchor, constant: -10).isActive = true
-        heroLabel.leftAnchor.constraint(equalTo: heroImageView.leftAnchor, constant: 10).isActive = true
+        heroLabel.snp.makeConstraints { (make) in
+            make.bottom.equalTo(heroImageView.snp.bottom).offset(-10)
+            make.left.equalTo(heroImageView.snp.left).offset(10)
+        }
     }
 
     func setupLayout(image: String, label: String) {
-//        if let image: UIImage = UIImage(named: image) {
-//            heroImageView.image = image
-//        }
-        print("IN LAYOUT: \(image)")
         let url = URL(string: image)
         heroImageView.kf.setImage(with: url)
-//        self.heroImageView.setImage(imageUrl: image)
         let myShadow = NSShadow()
         myShadow.shadowBlurRadius = 5
         myShadow.shadowOffset = CGSize(width: 3, height: 2)
         myShadow.shadowColor = UIColor.black
-
         let myAttribute = [ NSAttributedString.Key.shadow: myShadow ]
         let myAttrString = NSAttributedString(string: label, attributes: myAttribute)
         heroLabel.attributedText = myAttrString
@@ -57,10 +54,4 @@ final class CustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-}
-
-extension UIImageView {
-    func setImage(imageUrl: String) {
-        self.kf.setImage(with: URL(string: imageUrl))
-    }
 }

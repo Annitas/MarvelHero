@@ -6,7 +6,6 @@
 //
 
 struct MarvelData: Decodable {
-  /// The list of characters returned by the call.
     let results: [Character]?
     enum CodingKeys: String, CodingKey {
         case results
@@ -14,11 +13,8 @@ struct MarvelData: Decodable {
 }
 
 struct Character: Decodable {
-  /// The unique ID of the character resource.
     let id: Int?
-  /// The name of the character.
     let name: String?
-  ///  A short bio or description of the character.
     let description: String?
     let thumbnail: Thumbnail?
 }
@@ -33,9 +29,7 @@ struct Thumbnail: Decodable {
 }
 
 struct CharacterDataWrapper: Decodable {
-  /// The HTTP status code of the returned result.
     let code: Int?
-  /// The results returned by the call.
     let data: MarvelData?
 
     enum CodingKeys: String, CodingKey {
