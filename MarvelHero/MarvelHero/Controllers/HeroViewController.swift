@@ -27,10 +27,16 @@ final class HeroViewController: UIViewController {
         heroInfoView.font = .boldSystemFont(ofSize: 22)
         return heroInfoView
     }()
-    convenience init(heroView: String, heroLabelName: String, heroInfo: String) {
+    convenience init(heroView: String, heroLabelName: String, heroInfo: String, heroImageData: Data?) {
         self.init()
-        let url = URL(string: heroView)
-        self.heroImageView.kf.setImage(with: url)
+        if heroView != "" {
+            let url = URL(string: heroView)
+            self.heroImageView.kf.setImage(with: url)
+        } else {
+            guard let data = heroImageData else { return }
+            let image = UIImage(data: data)
+            heroImageView.image = image
+        }
         self.heroLabelName.text = heroLabelName
         self.heroInfo.text = heroInfo
     }

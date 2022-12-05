@@ -8,14 +8,38 @@
 import UIKit
 import SnapKit
 import RealmSwift
+import Kingfisher
 
 final class CellViewController: UIViewController {
-    // MARK: cell sizes
-    private let cellWidth = (3 / 4) * UIScreen.main.bounds.width
-    private let cellHeight = (3 / 5) * UIScreen.main.bounds.height - 60
-    private let sectionSpacing = (1 / 8) * UIScreen.main.bounds.width // need
-    private let cellSpacing = (1 / 16) * UIScreen.main.bounds.width
-    private let colors: [CGColor] = [UIColor.systemRed.cgColor,
+    private let marvelImageView = UIImageView(image: UIImage(named: "marvel"))
+    private let chooseHeroLabel: UILabel = {
+        let chooseHero = UILabel()
+        chooseHero.font = UIFont.boldSystemFont(ofSize: 26)
+        chooseHero.text = "Choose your hero"
+        chooseHero.textColor = UIColor.white
+        return chooseHero
+    }()
+    private lazy var collectionView: UICollectionView = {
+        let layout = PagingCollectionViewLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0,
+                                           left: (1 / 8) * UIScreen.main.bounds.width,
+                                           bottom: 0,
+                                           right: (1 / 8) * UIScreen.main.bounds.width)
+        layout.itemSize = CGSize(width: (3 / 4) * UIScreen.main.bounds.width,
+                                 height: (3 / 5) * UIScreen.main.bounds.height - 60)
+        layout.minimumLineSpacing = (1 / 16) * UIScreen.main.bounds.width
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
+        collectionView.dataSource = self
+        collectionView.contentMode = .scaleAspectFill
+        collectionView.clipsToBounds = true
+        collectionView.backgroundColor = .clear
+        collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "photoCell")
+        return collectionView
+    }()
+    private let backgroundColors: [CGColor] = [UIColor.systemRed.cgColor,
                              UIColor.systemBlue.cgColor,
                              UIColor.systemYellow.cgColor,
                              UIColor.systemBrown.cgColor,
@@ -24,22 +48,9 @@ final class CellViewController: UIViewController {
                              UIColor.systemPurple.cgColor
     ]
 
-    private lazy var collectionView: UICollectionView = {
-        let layout = PagingCollectionViewLayout()
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: sectionSpacing, bottom: 0, right: sectionSpacing)
-        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = cellSpacing
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.decelerationRate = .fast
-        collectionView.dataSource = self
-        return collectionView
-    }()
-
-    private let imageView = UIImageView(image: UIImage(named: "marvel"))
-    private let chooseHeroLabel = UILabel()
-    var apiResult = [Character]()
+    private let dbManager: DBManager = DBManagerImpl()
+    private var models = [HeroSet]()
+    private var apiResult = [Character]()
     override func viewDidLoad() {
         super.viewDidLoad()
         Service.sharedInstance.getMarvelHeroes { apiData in
@@ -49,48 +60,57 @@ final class CellViewController: UIViewController {
             }
         }
         createGradientLayer(bottomColor: 5)
-        view.addSubview(imageView)
+        view.addSubview(marvelImageView)
         view.addSubview(chooseHeroLabel)
-        chooseHeroLabel.font = UIFont.boldSystemFont(ofSize: 26)
-        chooseHeroLabel.text = "Choose your hero"
-        chooseHeroLabel.textColor = UIColor.white
+        view.addSubview(collectionView)
         let gesture = UITapGestureRecognizer(target: self,
                                              action: #selector(handleTapGesture(_:)))
-        collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "photoCell")
-        view.addSubview(collectionView)
         // MARK: set constraints
         setupConstraints()
-        collectionView.backgroundColor = .clear
         collectionView.addGestureRecognizer(gesture)
-        collectionView.contentMode = .scaleAspectFill
-        collectionView.clipsToBounds = true
+        self.models = self.dbManager.obtainHeroes()
+        print(models)
     }
     @objc func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
             return
         }
-        let heroLabel = apiResult[indexPath.row].name ?? ""
-        let heroInf = apiResult[indexPath.row].description ?? ""
-        var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "").\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
-        heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
-        let heroInfo = HeroViewController(heroView: heroStr, heroLabelName: heroLabel, heroInfo: heroInf)
-        navigationController?.pushViewController(heroInfo, animated: true)
+        if !apiResult.isEmpty {
+            let heroLabel = apiResult[indexPath.row].name ?? models.first?.heroes[indexPath.row].name ?? ""
+            let heroInf = apiResult[indexPath.row].description ?? models.first?.heroes[indexPath.row].descriptionHero ?? ""
+            var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "").\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
+            heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
+            let heroImageData = models.first?.heroes[indexPath.row].pictureHero
+            let heroInfo = HeroViewController(heroView: heroStr,
+                                              heroLabelName: heroLabel,
+                                              heroInfo: heroInf, heroImageData: heroImageData)
+            navigationController?.pushViewController(heroInfo, animated: true)
+        } else if !models.isEmpty {
+            let heroLabel =  models.first?.heroes[indexPath.row].name ?? ""
+            let heroInf = models.first?.heroes[indexPath.row].descriptionHero ?? ""
+            var heroStr = ""
+            let heroImageData = models.first?.heroes[indexPath.row].pictureHero
+            let heroInfo = HeroViewController(heroView: heroStr,
+                                              heroLabelName: heroLabel,
+                                              heroInfo: heroInf, heroImageData: heroImageData)
+            navigationController?.pushViewController(heroInfo, animated: true)
+        }
     }
     func createGradientLayer(bottomColor: Int) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor.systemGray.cgColor, colors[bottomColor]]
+        gradientLayer.colors = [UIColor.systemGray.cgColor, backgroundColors[bottomColor]]
         view.layer.addSublayer(gradientLayer)
     }
     func setupConstraints() {
-        imageView.snp.makeConstraints { (make) in
+        marvelImageView.snp.makeConstraints { (make) in
             make.width.equalTo(150)
             make.height.equalTo(44)
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
         }
         chooseHeroLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.top.equalTo(marvelImageView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
         }
         collectionView.snp.makeConstraints { (make) in
@@ -104,16 +124,24 @@ final class CellViewController: UIViewController {
 
 extension CellViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return apiResult.count
+        return 19 // apiResult.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? CustomCell else {
             return .init()
         }
-        var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "")/portrait_uncanny.\(apiResult[indexPath.row].thumbnail?.ext! ?? "")"
-        heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
-        let heroLabel = apiResult[indexPath.row].name ?? ""
-        cell.setupLayout(image: heroStr, label: heroLabel)
+        if !apiResult.isEmpty {
+            var heroStr = "\(apiResult[indexPath.row].thumbnail?.path ?? "")/portrait_uncanny.\(apiResult[indexPath.row].thumbnail?.ext ?? "")"
+            heroStr.insert(contentsOf: "s", at: heroStr.index(heroStr.startIndex, offsetBy: 4))
+            let heroLabel = apiResult[indexPath.row].name ?? models.first?.heroes[indexPath.row].name ?? ""
+            let heroImageData = models.first?.heroes[indexPath.row].pictureHero
+            cell.setupCellView(image: heroStr, label: heroLabel, heroData: heroImageData)
+        } else if !models.isEmpty {
+            let heroStr = ""
+            let heroLabel = models.first?.heroes[indexPath.row].name ?? ""
+            let heroImageData = models.first?.heroes[indexPath.row].pictureHero
+            cell.setupCellView(image: heroStr, label: heroLabel, heroData: heroImageData)
+        }
         return cell
     }
 }

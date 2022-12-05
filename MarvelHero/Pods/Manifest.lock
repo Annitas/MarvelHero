@@ -12,7 +12,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.0)
   - Kingfisher (~> 7.0)
-  - RealmSwift (~> 10)
+  - RealmSwift
   - SnapKit (~> 5.6.0)
   - SwiftLint
 
@@ -33,6 +33,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
 
-PODFILE CHECKSUM: f443a02916f1803b0da09e9688e8d08fcdf54052
+PODFILE CHECKSUM: d50ef37e1cb8d1448188240fcf5da3d46658b115
 
 COCOAPODS: 1.11.3

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0CD3FC90D8AAE9C8F659B061 /* Pods_MarvelHero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B14D73691947D56CA2BA02B7 /* Pods_MarvelHero.framework */; };
+		750BC98F292A37B300517BF7 /* HeroDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750BC98E292A37B300517BF7 /* HeroDBModel.swift */; };
+		750BC991292A382C00517BF7 /* DBHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750BC990292A382C00517BF7 /* DBHero.swift */; };
+		750BC993292A387700517BF7 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750BC992292A387700517BF7 /* DBManager.swift */; };
+		750BC995292A72CE00517BF7 /* HeroSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750BC994292A72CE00517BF7 /* HeroSet.swift */; };
 		751D831529188660001D632A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751D831429188660001D632A /* AppDelegate.swift */; };
 		751D831729188660001D632A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751D831629188660001D632A /* SceneDelegate.swift */; };
 		751D831929188660001D632A /* CellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751D831829188660001D632A /* CellViewController.swift */; };
@@ -22,6 +26,10 @@
 
 /* Begin PBXFileReference section */
 		4765C7B11E2BC60D52504264 /* Pods-MarvelHero.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarvelHero.release.xcconfig"; path = "Target Support Files/Pods-MarvelHero/Pods-MarvelHero.release.xcconfig"; sourceTree = "<group>"; };
+		750BC98E292A37B300517BF7 /* HeroDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDBModel.swift; sourceTree = "<group>"; };
+		750BC990292A382C00517BF7 /* DBHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHero.swift; sourceTree = "<group>"; };
+		750BC992292A387700517BF7 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		750BC994292A72CE00517BF7 /* HeroSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroSet.swift; sourceTree = "<group>"; };
 		751D831129188660001D632A /* MarvelHero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelHero.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		751D831429188660001D632A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		751D831629188660001D632A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +67,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		750BC98D292A36C900517BF7 /* HeroDataBase */ = {
+			isa = PBXGroup;
+			children = (
+				750BC98E292A37B300517BF7 /* HeroDBModel.swift */,
+				750BC990292A382C00517BF7 /* DBHero.swift */,
+				750BC992292A387700517BF7 /* DBManager.swift */,
+				750BC994292A72CE00517BF7 /* HeroSet.swift */,
+			);
+			path = HeroDataBase;
+			sourceTree = "<group>";
+		};
 		751D830829188660001D632A = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +99,7 @@
 		751D831329188660001D632A /* MarvelHero */ = {
 			isa = PBXGroup;
 			children = (
+				750BC98D292A36C900517BF7 /* HeroDataBase */,
 				754560AF2918950900078E36 /* Network */,
 				75F14B3A291890A100A9A666 /* Controllers */,
 				751D831429188660001D632A /* AppDelegate.swift */,
@@ -253,12 +273,16 @@
 			files = (
 				75F14B3729188C3400A9A666 /* PagingCollectionViewLayout.swift in Sources */,
 				754560B429189EB500078E36 /* HeroModel.swift in Sources */,
+				750BC995292A72CE00517BF7 /* HeroSet.swift in Sources */,
 				754560B229189E5F00078E36 /* Service.swift in Sources */,
 				751D831929188660001D632A /* CellViewController.swift in Sources */,
+				750BC991292A382C00517BF7 /* DBHero.swift in Sources */,
 				75F14B3929188D1800A9A666 /* CustomCell.swift in Sources */,
 				751D831529188660001D632A /* AppDelegate.swift in Sources */,
+				750BC98F292A37B300517BF7 /* HeroDBModel.swift in Sources */,
 				75DC9BE7291891D4009760E7 /* HeroViewController.swift in Sources */,
 				751D831729188660001D632A /* SceneDelegate.swift in Sources */,
+				750BC993292A387700517BF7 /* DBManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +430,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -436,7 +460,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

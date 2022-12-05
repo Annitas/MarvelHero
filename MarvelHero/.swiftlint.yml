@@ -10,3 +10,6 @@ identifier_name:
  min_length:
  - 2 # warning
  - 1 # error
+
+disabled_rules:
+ - force_try

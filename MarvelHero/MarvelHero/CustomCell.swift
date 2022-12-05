@@ -21,7 +21,6 @@ final class CustomCell: UICollectionViewCell {
         heroLabel.font = UIFont.boldSystemFont(ofSize: 22)
         return heroLabel
     }()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(heroImageView)
@@ -39,9 +38,15 @@ final class CustomCell: UICollectionViewCell {
         }
     }
 
-    func setupLayout(image: String, label: String) {
-        let url = URL(string: image)
-        heroImageView.kf.setImage(with: url)
+    func setupCellView(image: String, label: String, heroData: Data?) {
+        if image != "" {
+            let url = URL(string: image)
+            heroImageView.kf.setImage(with: url)
+        } else {
+            guard let data = heroData else { return }
+            let image = UIImage(data: data)
+            heroImageView.image = image
+        }
         let myShadow = NSShadow()
         myShadow.shadowBlurRadius = 5
         myShadow.shadowOffset = CGSize(width: 3, height: 2)
