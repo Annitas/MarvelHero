@@ -19,6 +19,7 @@
 		751D832129188660001D632A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 751D831F29188660001D632A /* LaunchScreen.storyboard */; };
 		754560B229189E5F00078E36 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754560B129189E5F00078E36 /* Service.swift */; };
 		754560B429189EB500078E36 /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754560B329189EB500078E36 /* HeroModel.swift */; };
+		75AFD1BB29422545008529B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75AFD1BA29422545008529B7 /* GoogleService-Info.plist */; };
 		75DC9BE7291891D4009760E7 /* HeroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DC9BE6291891D4009760E7 /* HeroViewController.swift */; };
 		75F14B3729188C3400A9A666 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */; };
 		75F14B3929188D1800A9A666 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3829188D1800A9A666 /* CustomCell.swift */; };
@@ -39,6 +40,7 @@
 		751D832229188660001D632A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		754560B129189E5F00078E36 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		754560B329189EB500078E36 /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
+		75AFD1BA29422545008529B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		75DC9BE6291891D4009760E7 /* HeroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroViewController.swift; sourceTree = "<group>"; };
 		75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
 		75F14B3829188D1800A9A666 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				751D831D29188660001D632A /* Assets.xcassets */,
 				751D831F29188660001D632A /* LaunchScreen.storyboard */,
 				751D832229188660001D632A /* Info.plist */,
+				75AFD1BA29422545008529B7 /* GoogleService-Info.plist */,
 				75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */,
 				75F14B3829188D1800A9A666 /* CustomCell.swift */,
 			);
@@ -186,6 +189,9 @@
 				Base,
 			);
 			mainGroup = 751D830829188660001D632A;
+			packageReferences = (
+				75AFD1BC29422B18008529B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 751D831229188660001D632A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -202,6 +208,7 @@
 			files = (
 				751D832129188660001D632A /* LaunchScreen.storyboard in Resources */,
 				751D831E29188660001D632A /* Assets.xcassets in Resources */,
+				75AFD1BB29422545008529B7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +503,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		75AFD1BC29422B18008529B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 751D830929188660001D632A /* Project object */;
 }

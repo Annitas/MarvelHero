@@ -88,7 +88,7 @@ final class CellViewController: UIViewController {
         } else if !models.isEmpty {
             let heroLabel =  models.first?.heroes[indexPath.row].name ?? ""
             let heroInf = models.first?.heroes[indexPath.row].descriptionHero ?? ""
-            var heroStr = ""
+            let heroStr = ""
             let heroImageData = models.first?.heroes[indexPath.row].pictureHero
             let heroInfo = HeroViewController(heroView: heroStr,
                                               heroLabelName: heroLabel,

@@ -9,6 +9,7 @@ target 'MarvelHero' do
   pod 'Kingfisher', '~> 7.0'
   pod 'SnapKit', '~> 5.6.0'
   pod 'RealmSwift'
+  pod 'FirebaseMessaging'
   # Pods for MarvelHero
 
 end
