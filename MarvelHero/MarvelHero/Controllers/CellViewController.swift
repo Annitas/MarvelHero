@@ -12,6 +12,7 @@ import Kingfisher
 
 final class CellViewController: UIViewController {
     private let marvelImageView = UIImageView(image: UIImage(named: "marvel"))
+    private let backGroundImageView = BackgroundLayer(frame: .zero)
     private let chooseHeroLabel: UILabel = {
         let chooseHero = UILabel()
         chooseHero.font = UIFont.boldSystemFont(ofSize: 26)
@@ -39,13 +40,13 @@ final class CellViewController: UIViewController {
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "photoCell")
         return collectionView
     }()
-    private let backgroundColors: [CGColor] = [UIColor.systemRed.cgColor,
-                             UIColor.systemBlue.cgColor,
-                             UIColor.systemYellow.cgColor,
-                             UIColor.systemBrown.cgColor,
-                             UIColor.darkGray.cgColor,
-                             UIColor.systemPink.cgColor,
-                             UIColor.systemPurple.cgColor
+    private let backgroundColors: [UIColor] = [UIColor.systemRed,
+                             UIColor.systemBlue,
+                             UIColor.systemYellow,
+                             UIColor.systemBrown,
+                             UIColor.darkGray,
+                             UIColor.systemPink,
+                             UIColor.systemPurple
     ]
 
     private let dbManager: DBManager = DBManagerImpl()
@@ -59,7 +60,9 @@ final class CellViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
-        createGradientLayer(bottomColor: 5)
+        view.addSubview(backGroundImageView)
+        backGroundImageView.setTriangleColor(backgroundColors[0])
+//        createGradientLayer(bottomColor: 5)
         view.addSubview(marvelImageView)
         view.addSubview(chooseHeroLabel)
         view.addSubview(collectionView)
@@ -96,6 +99,9 @@ final class CellViewController: UIViewController {
             navigationController?.pushViewController(heroInfo, animated: true)
         }
     }
+//    func drawTriangle() {
+//        backGroundImageView?.withTintColor(UIColor.systemPink)
+//    }
     func createGradientLayer(bottomColor: Int) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -108,6 +114,11 @@ final class CellViewController: UIViewController {
             make.height.equalTo(44)
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        backGroundImageView.snp.makeConstraints { (make) in
+            make.width.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         chooseHeroLabel.snp.makeConstraints { (make) in
             make.top.equalTo(marvelImageView.snp.bottom).offset(10)
@@ -143,5 +154,13 @@ extension CellViewController: UICollectionViewDataSource {
             cell.setupCellView(image: heroStr, label: heroLabel, heroData: heroImageData)
         }
         return cell
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView is UICollectionView else { return }
+        let centerPoint = CGPoint(x: scrollView.frame.size.width / 2 + scrollView.contentOffset.x,
+                                  y: scrollView.frame.size.height / 2 + scrollView.contentOffset.y)
+        if let indexPath = collectionView.indexPathForItem(at: centerPoint) {
+            backGroundImageView.setTriangleColor(backgroundColors[indexPath.row])
+        }
     }
 }

@@ -20,6 +20,7 @@
 		754560B229189E5F00078E36 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754560B129189E5F00078E36 /* Service.swift */; };
 		754560B429189EB500078E36 /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754560B329189EB500078E36 /* HeroModel.swift */; };
 		75AFD1BB29422545008529B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75AFD1BA29422545008529B7 /* GoogleService-Info.plist */; };
+		75AFD1C42942D359008529B7 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AFD1C32942D359008529B7 /* BackgroundLayer.swift */; };
 		75DC9BE7291891D4009760E7 /* HeroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DC9BE6291891D4009760E7 /* HeroViewController.swift */; };
 		75F14B3729188C3400A9A666 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */; };
 		75F14B3929188D1800A9A666 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F14B3829188D1800A9A666 /* CustomCell.swift */; };
@@ -41,6 +42,7 @@
 		754560B129189E5F00078E36 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		754560B329189EB500078E36 /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
 		75AFD1BA29422545008529B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		75AFD1C32942D359008529B7 /* BackgroundLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLayer.swift; sourceTree = "<group>"; };
 		75DC9BE6291891D4009760E7 /* HeroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroViewController.swift; sourceTree = "<group>"; };
 		75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
 		75F14B3829188D1800A9A666 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				75AFD1BA29422545008529B7 /* GoogleService-Info.plist */,
 				75F14B3629188C3400A9A666 /* PagingCollectionViewLayout.swift */,
 				75F14B3829188D1800A9A666 /* CustomCell.swift */,
+				75AFD1C32942D359008529B7 /* BackgroundLayer.swift */,
 			);
 			path = MarvelHero;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				75DC9BE7291891D4009760E7 /* HeroViewController.swift in Sources */,
 				751D831729188660001D632A /* SceneDelegate.swift in Sources */,
 				750BC993292A387700517BF7 /* DBManager.swift in Sources */,
+				75AFD1C42942D359008529B7 /* BackgroundLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
