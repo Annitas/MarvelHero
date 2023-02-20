@@ -20,6 +20,12 @@ final class CellViewController: UIViewController {
         chooseHero.textColor = UIColor.white
         return chooseHero
     }()
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
     private lazy var collectionView: UICollectionView = {
         let layout = PagingCollectionViewLayout()
         layout.scrollDirection = .horizontal
@@ -37,6 +43,8 @@ final class CellViewController: UIViewController {
         collectionView.contentMode = .scaleAspectFill
         collectionView.clipsToBounds = true
         collectionView.backgroundColor = .clear
+        collectionView.isHidden = true
+        collectionView.alpha = 0
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "photoCell")
         return collectionView
     }()
@@ -60,14 +68,17 @@ final class CellViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
+        view.addSubview(spinner)
         view.addSubview(backGroundImageView)
         backGroundImageView.setTriangleColor(backgroundColors[0])
 //        createGradientLayer(bottomColor: 5)
         view.addSubview(marvelImageView)
         view.addSubview(chooseHeroLabel)
         view.addSubview(collectionView)
+        setupCollectionView()
         let gesture = UITapGestureRecognizer(target: self,
                                              action: #selector(handleTapGesture(_:)))
+        spinner.startAnimating()
         // MARK: set constraints
         setupConstraints()
         collectionView.addGestureRecognizer(gesture)
@@ -99,9 +110,15 @@ final class CellViewController: UIViewController {
             navigationController?.pushViewController(heroInfo, animated: true)
         }
     }
-//    func drawTriangle() {
-//        backGroundImageView?.withTintColor(UIColor.systemPink)
-//    }
+    private func setupCollectionView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.spinner.stopAnimating()
+            self.collectionView.isHidden = false
+            UIView.animate(withDuration: 0.4) {
+                self.collectionView.alpha = 1
+            }
+        })
+    }
     func createGradientLayer(bottomColor: Int) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -129,6 +146,12 @@ final class CellViewController: UIViewController {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.80).offset(-70)
+        }
+        spinner.snp.makeConstraints {(make) in
+            make.width.equalTo(100)
+            make.height.equalTo(100)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
     }
 }
